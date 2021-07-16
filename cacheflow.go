@@ -84,6 +84,10 @@ func (c *Cacher) InsertWithExpiry(key string, expiry time.Duration, data []byte)
 	}
 }
 
-func (c *Cacher) Delete(key string) {
+func (c *Cacher) Delete(key string) error {
+	ele, ok := c.Cache[key]
+	if !ok {
+		return fmt.Errorf("element not found for deletion %+v", c.Cache)
+	}
 	delete(c.Cache, key)
 }
